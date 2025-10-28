@@ -19,4 +19,16 @@ export const mockTasks: Task[] = [
     createdAt: new Date(),
     completed: false,
   },
+  {
+    id: "b4f3e8e2-5f4e-4d3a-9f4a-2c3e5f6a7b8c",
+    text: "Build a Todo App",
+    createdAt: new Date(),
+    completed: true,
+  },
+  {
+    id: "d2c3e4f5-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    text: "Write Unit Tests",
+    createdAt: new Date(),
+    completed: false,
+  }
 ];

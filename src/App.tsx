@@ -1,12 +1,30 @@
-import AddTask from "./components/AddTask";
 import { useState } from "react";
-import type { Task } from "./types";
-import "./App.css";
 import { mockTasks } from "./data/mock-todos";
+import { filterValues } from "./types";
+
+import type { Task } from "./types";
+import type { Filters } from "./types";
+
 import TaskList from "./components/TaskList";
+import FilterButtons from "./components/FilterButtons";
+import AddTask from "./components/AddTask";
+import Summary from "./components/Summary";
+
+import "./App.css";
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>(() => mockTasks);
+  const [activeFilter, setActiveFilter] = useState<Filters>(filterValues.all);
+
+  const filteredTasks = tasks.filter((task) => {
+    if (activeFilter === filterValues.active) {
+      return !task.completed;
+    }
+    if (activeFilter === filterValues.completed) {
+      return task.completed;
+    }
+    return true;
+  });
 
   function handleAddTask(task: Task) {
     setTasks([...tasks, task]);
@@ -20,14 +38,23 @@ export default function App() {
     );
   }
 
+  function handleFilterChange(filter: Filters) {
+    setActiveFilter(filter);
+  }
+
   return (
     <>
       <header className="container">
         <h1>Todo List App</h1>
         <AddTask onSubmit={handleAddTask} />
+        <FilterButtons onFilterChange={handleFilterChange} />
       </header>
       <main className="container">
-        <TaskList tasks={tasks} handleOnClick={toggleComplete} />
+        <Summary
+          total={tasks.length}
+          completed={tasks.filter((task) => task.completed).length}
+        />
+        <TaskList tasks={filteredTasks} handleOnClick={toggleComplete} />
       </main>
     </>
   );
