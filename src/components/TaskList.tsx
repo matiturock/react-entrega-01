@@ -1,9 +1,9 @@
-import type { Task } from "../types";
+import type { TaskId, Task } from "../types";
 import styles from "./TaskList.module.css";
 
 interface ListTasksProps {
   tasks: Task[];
-  handleOnClick: (id: string) => void;
+  handleOnClick: (taskId: TaskId) => void;
 }
 export default function ListTasks(props: ListTasksProps) {
   const { tasks, handleOnClick } = props;

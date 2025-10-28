@@ -2,7 +2,7 @@ import { useState } from "react";
 import { mockTasks } from "./data/mock-todos";
 import { filterValues } from "./types";
 
-import type { Task } from "./types";
+import type { TaskId, Task } from "./types";
 import type { Filters } from "./types";
 
 import TaskList from "./components/TaskList";
@@ -30,10 +30,10 @@ export default function App() {
     setTasks([...tasks, task]);
   }
 
-  function toggleComplete(id: string) {
+  function toggleComplete(taskId: TaskId) {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task,
+        task.id === taskId ? { ...task, completed: !task.completed } : task,
       ),
     );
   }

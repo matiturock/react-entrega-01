@@ -1,5 +1,7 @@
+export type TaskId = `${string}-${string}-${string}-${string}-${string}`;
+
 export interface Task {
-  id: `${string}-${string}-${string}-${string}-${string}`;
+  id: TaskId;
   text: string;
   createdAt: Date;
   completed: boolean;
