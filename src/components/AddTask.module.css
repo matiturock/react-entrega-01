@@ -1,0 +1,8 @@
+.errorContainer {
+    min-height: 27px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}

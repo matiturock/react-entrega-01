@@ -1,0 +1,14 @@
+.taskContainer {
+    padding-left: 0;
+}
+
+.taskItem {
+    cursor: pointer;
+    padding-block: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.completed {
+    text-decoration: line-through;
+}
