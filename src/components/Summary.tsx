@@ -8,7 +8,11 @@ export default function Summary(props: TasksCountProps) {
 
   return (
     <div>
-      <p>Resume: {completed}/{total}</p>
+      <p>
+        <strong>
+          Resume: {completed}/{total}
+        </strong>
+      </p>
     </div>
   );
 }

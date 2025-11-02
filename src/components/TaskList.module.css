@@ -4,10 +4,25 @@
 }
 
 .taskItem {
+    list-style-type: none;
+}
+
+.taskContent {
     cursor: pointer;
-    padding-block: 0.75rem;
     display: flex;
+    width: 100%;
     justify-content: space-between;
+    align-items: center;
+}
+
+.actionsContainer {
+    display: flex;
+    gap: 8px;
+}
+
+.date {
+    font-size: 0.8rem;
+    color: #999;
 }
 
 .completed {

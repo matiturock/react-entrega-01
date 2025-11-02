@@ -3,7 +3,7 @@ import { filterValues } from "../types";
 const buttons = Object.values(filterValues);
 
 interface FilterButtonsProps {
-  onFilterChange: (filter: typeof buttons[number]) => void;
+  onFilterChange: (filter: (typeof buttons)[number]) => void;
 }
 
 export default function FilterButtons(props: FilterButtonsProps) {
@@ -11,11 +11,13 @@ export default function FilterButtons(props: FilterButtonsProps) {
 
   return (
     <div className="grid">
+      <div></div>
       {buttons.map((button) => (
         <button
           key={button}
           className="outline contrast"
-          onClick={() => onFilterChange(button)}>
+          onClick={() => onFilterChange(button)}
+        >
           {button}
         </button>
       ))}

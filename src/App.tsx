@@ -5,15 +5,17 @@ import { filterValues } from "./types";
 import type { TaskId, Task } from "./types";
 import type { Filters } from "./types";
 
-import TaskList from "./components/TaskList";
-import FilterButtons from "./components/FilterButtons";
+import Nav from "./components/Nav";
 import AddTask from "./components/AddTask";
 import Summary from "./components/Summary";
+import FilterButtons from "./components/FilterButtons";
+import TaskList from "./components/TaskList";
 
 import "./App.css";
+import useTasks from "./hooks/useTasks";
 
 export default function App() {
-  const [tasks, setTasks] = useState<Task[]>(() => mockTasks);
+  const { tasks, setTasks, totalTasks, completedTasks } = useTasks();
   const [activeFilter, setActiveFilter] = useState<Filters>(filterValues.all);
 
   const filteredTasks = tasks.filter((task) => {
@@ -42,19 +44,41 @@ export default function App() {
     setActiveFilter(filter);
   }
 
+  function deleteTask(taskId: TaskId) {
+    setTasks((prevTasks) => {
+      return prevTasks.filter((task) => task.id !== taskId);
+    });
+  }
+
+  function editTask(taskId: TaskId) {
+    console.log("Editing Task");
+  }
+
   return (
     <>
       <header className="container">
-        <h1>Todo List App</h1>
+        <Nav>
+          <li>
+            <a>About</a>
+          </li>
+          <li>
+            <a>User</a>
+          </li>
+          <li>
+            <a>Config</a>
+          </li>
+        </Nav>
         <AddTask onSubmit={handleAddTask} />
+        <Summary total={totalTasks} completed={completedTasks} />
         <FilterButtons onFilterChange={handleFilterChange} />
       </header>
       <main className="container">
-        <Summary
-          total={tasks.length}
-          completed={tasks.filter((task) => task.completed).length}
+        <TaskList
+          tasks={filteredTasks}
+          handleToggleComplete={toggleComplete}
+          handleDeleteTask={deleteTask}
+          handleEditTask={editTask}
         />
-        <TaskList tasks={filteredTasks} handleOnClick={toggleComplete} />
       </main>
     </>
   );
