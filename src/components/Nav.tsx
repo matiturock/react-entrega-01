@@ -1,11 +1,6 @@
-import { Children } from "react";
-import type { ReactNode } from "react";
-
-import styles from "./Nav.module.css";
-
-export default function Nav({ children }: { children: ReactNode }) {
+export default function Nav() {
   return (
-    <nav className={styles.nav}>
+    <nav>
       <ul>
         <li>
           <h2>
@@ -14,9 +9,15 @@ export default function Nav({ children }: { children: ReactNode }) {
         </li>
       </ul>
       <ul>
-        {Children.map(children, (child) => (
-          <div className="Row">{child}</div>
-        ))}
+        <li>
+          <a>About</a>
+        </li>
+        <li>
+          <a>User</a>
+        </li>
+        <li>
+          <a>Config</a>
+        </li>
       </ul>
     </nav>
   );

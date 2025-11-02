@@ -8,9 +8,7 @@ interface ListTasksProps {
   handleDeleteTask: (taskId: TaskId) => void;
   handleEditTask: (taskId: TaskId) => void;
 }
-export default function ListTasks(props: ListTasksProps) {
-  const { tasks, handleToggleComplete, handleDeleteTask, handleEditTask } =
-    props;
+export default function ListTasks({ tasks, handleToggleComplete, handleDeleteTask, handleEditTask }: ListTasksProps) {
   return (
     <ul className={styles.taskContainer}>
       {tasks.map((task) => (
