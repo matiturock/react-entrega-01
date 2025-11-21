@@ -3,8 +3,9 @@ export type TaskId = `${string}-${string}-${string}-${string}-${string}`;
 export interface Task {
   id: TaskId;
   text: string;
-  createdAt: Date;
-  completed: boolean;
+  created_at: Date;
+  edited_at: Date;
+  done: boolean;
 }
 
 export type Filters = "All" | "Active" | "Completed";
@@ -12,5 +13,5 @@ export type Filters = "All" | "Active" | "Completed";
 export const filterValues = {
   all: "All" as Filters,
   active: "Active" as Filters,
-  completed: "Completed" as Filters,
+  done: "Completed" as Filters,
 } as const;

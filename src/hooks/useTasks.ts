@@ -1,48 +1,21 @@
-import { useState } from "react";
+import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import type { Task } from "../types";
-import { mockTasks } from "../data/mock-todos.ts";
 
-export default function useTasks(newTaks: Task[] = mockTasks) {
-  const [tasks, setTasks] = useState<Task[]>(newTaks);
-
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter((task) => task.completed).length;
-
-  const summaryTasks = { totalTasks, completedTasks };
-
-  function addTask(task: Task) {
-    setTasks([...tasks, task]);
-  }
-
-  function editTask(taskId: string, updatedTask: Partial<Task>) {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, ...updatedTask } : task,
-      ),
-    );
-  }
-
-  function deleteTask(taskId: string) {
-    setTasks((prevTasks) => {
-      return prevTasks.filter((task) => task.id !== taskId);
-    });
-  }
-
-  function toggleComplete(taskId: string) {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task,
-      ),
-    );
-  }
-
-  const handlersTasks = {
-    addTask, editTask, deleteTask, toggleComplete
-  };
-
-  return {
-    tasks,
-    handlersTasks,
-    summaryTasks
-  };
-}
+export function useTasks(): UseQueryResult<Task[], Error> {
+  return useQuery({
+    queryKey: ['tasks'],
+    queryFn: async () => {
+      try {
+        const response = await fetch("/.netlify/functions/tasks");
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.tasks || [];
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+        throw error;
+      }
+    },
+  });
+};
