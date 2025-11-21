@@ -1,14 +1,25 @@
 import { useFilters } from "../hooks/useFilters";
 import { filterValues, type Task } from "../types";
+import { useTasks } from "../hooks/useTasks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postTask } from "../services/tasks-services";
 import AddTask from "./AddTask";
 import FilterButtons from "./FilterButtons";
 import Nav from "./Nav";
 import Summary from "./Summary";
 import TaskList from "./TaskList";
-import { useTasks } from "../hooks/useTasks";
+import { Toaster, toast } from "sonner";
 
 export default function Todos() {
     const { data, isLoading, isError, error } = useTasks();
+    const queryClient = useQueryClient();
+    const { mutate: createTask } = useMutation({
+        mutationFn: postTask,
+        onSuccess: async () => {
+            toast.success("Tarea creada con éxito");
+            await queryClient.refetchQueries({ queryKey: ["tasks"] });
+        },
+    });
 
     const { activeFilter, handleFilterChange } = useFilters();
 
@@ -28,8 +39,9 @@ export default function Todos() {
     return (
         <>
             <header className="container">
+                <Toaster richColors position="top-center" />
                 <Nav />
-                <AddTask onSubmit={() => console.log("Add task")} />
+                <AddTask onSubmit={createTask} />
                 <Summary
                     total={data?.length || 0}
                     completed={

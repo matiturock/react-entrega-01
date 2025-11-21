@@ -25,12 +25,7 @@ export default function AddTask({ onSubmit }: AddTaskProps) {
         setError(false);
         inputRef.current?.removeAttribute("aria-invalid");
 
-        onSubmit({
-            id: crypto.randomUUID(),
-            text: userInput,
-            created_at: new Date(),
-            done: false,
-        });
+        onSubmit({ text: userInput } as Task);
 
         setUserInput("");
     };
